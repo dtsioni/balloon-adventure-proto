@@ -49,7 +49,12 @@ public class Level5 extends Level {
         return STARS;
     }
 
-    private final Vector2 CAMERA_POSITION = new Vector2(20, 80);
-    private final float CAMERA_ZOOM = 0.35f;
+    public int getWorldWidth() {
+        return WORLD_WIDTH;
+    }
+
+    private final Vector2 CAMERA_POSITION = new Vector2(0.5f * GRID_SIZE, 1.5f * GRID_SIZE);
+    private final float CAMERA_ZOOM = 1f;
     private final int STARS = 1;
+    private final int WORLD_WIDTH = (int) (GRID_SIZE * 3.5) + MARGIN;
 }

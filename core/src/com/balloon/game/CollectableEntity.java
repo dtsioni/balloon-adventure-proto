@@ -18,7 +18,7 @@ public abstract class CollectableEntity extends Entity {
         setOrigin(getThisWidth() / 2.0f, getThisHeight() / 2.0f);
 
         CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(getWidth()/3f);
+        circleShape.setRadius(getWidth()/getShapeCollisionRatio());
 
         body = new BodyBuilder()
                 .withType(BodyDef.BodyType.StaticBody)
@@ -49,6 +49,10 @@ public abstract class CollectableEntity extends Entity {
         return HEIGHT;
     }
 
+    protected float getShapeCollisionRatio() {
+        return SHAPE_COLLISION_RATIO;
+    }
+
     protected abstract boolean internalCollect();
 
     public abstract String getImagePath();
@@ -60,6 +64,7 @@ public abstract class CollectableEntity extends Entity {
 
     private final int WIDTH = Constants.GRID_SIZE / 2;
     private final int HEIGHT = WIDTH;
+    private final float SHAPE_COLLISION_RATIO = 3f;
 
     private final int SCALE_X = 1;
     private final int SCALE_Y = 1;

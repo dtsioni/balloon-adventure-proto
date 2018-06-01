@@ -1,9 +1,14 @@
 package com.balloon.game;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -20,24 +25,30 @@ public class LevelScreen implements Screen {
     public LevelScreen(HotAirGame hotAirGame, int level) {
         this.hotAirGame = hotAirGame;
         this.level = level;
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        SCREEN_WIDTH = Gdx.graphics.getWidth();
+        SCREEN_HEIGHT = Gdx.graphics.getHeight();
+        ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT;
+
+        backgroundTexture = new Texture(BACKGROUND_PATH);
+        backgroundSprite = new Sprite(backgroundTexture);
+        backgroundTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         batch = new SpriteBatch();
         levelLoader = new LevelLoader();
-        stage = new Stage();
         debugRenderer = new Box2DDebugRenderer();
         contactListenerImpl = new ContactListenerImpl();
         removeBodyHandler = new RemoveBodyHandler();
         bitmapFont = new BitmapFont();
         starHandler = new StarHandler();
-        inputProcessor = new InputProcessorImpl(stage);
+        /* TODO fix this camera bullshit */
         orthographicCamera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
-        fitViewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, orthographicCamera);
 
         orthographicCamera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        stage.setViewport(fitViewport);
         levelLoader.withLevel(level);
+        fitViewport = new FitViewport(levelLoader.getWorldWidth(), levelLoader.getWorldWidth() / ASPECT_RATIO, orthographicCamera);
+        stage = new Stage(fitViewport, batch);
+        inputProcessor = new InputProcessorImpl(stage);
         orthographicCamera.position.set(levelLoader.getCameraPosition(), 0);
         orthographicCamera.zoom = levelLoader.getCameraZoom();
         StarHandler.withStars(levelLoader.getLevelScore());
@@ -58,20 +69,22 @@ public class LevelScreen implements Screen {
 
     @Override
     public void render (float delta) {
-        Gdx.gl.glClearColor(0, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act();
 
         batch.begin();
-        stage.draw();
+        batch.draw(backgroundTexture, -20, -20);
         batch.end();
 
+        stage.draw();
         //debugRenderer.render(world, orthographicCamera.combined);
+
         world.step(1/60f, 6, 2);
         RemoveBodyHandler.removeBodysFromWorld();
 
-        if(Gdx.app.getInput().isKeyPressed(Input.Keys.SPACE)) {
+        if(Gdx.app.getInput().isKeyPressed(Input.Keys.E)) {
+            if(level == 6) level = 0;
             hotAirGame.showLevel(level + 1);
             resetHandlers();
         }
@@ -81,8 +94,13 @@ public class LevelScreen implements Screen {
             resetHandlers();
         }
 
-        if(Gdx.app.getInput().isButtonPressed(Input.Keys.BACK)) {
-            hotAirGame.showMainMenu();
+        if(Gdx.app.getInput().isKeyPressed(Input.Keys.Q)) {
+            hotAirGame.showLevel(level - 1);
+            resetHandlers();
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            hotAirGame.showLevel(level);
         }
 
         if(StarHandler.isAllGoldStarsCollected()) {
@@ -127,12 +145,17 @@ public class LevelScreen implements Screen {
         world.dispose();
     }
 
-    private final static int SCREEN_WIDTH = Gdx.graphics.getWidth();
-    private final static int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+    private static float SCREEN_WIDTH;
+    private static float SCREEN_HEIGHT;
+    private static float ASPECT_RATIO;
 
-    private final static int WORLD_WIDTH = SCREEN_WIDTH;
-    private final static int WORLD_HEIGHT = SCREEN_HEIGHT;
+    private final static int WORLD_WIDTH = 15;
+    private final static int WORLD_HEIGHT = 30;
 
+    private final String BACKGROUND_PATH = "img/countryside.jpg";
+
+    private Texture backgroundTexture;
+    private Sprite backgroundSprite;
     private HotAirGame hotAirGame;
     private int level;
     private LevelLoader levelLoader;

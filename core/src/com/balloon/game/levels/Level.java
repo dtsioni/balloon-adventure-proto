@@ -19,7 +19,6 @@ public abstract class Level {
         wallFactory = new WallFactory(world);
         starFactory = new StarFactory(world);
         mineFactory = new MineFactory(world);
-        silverStarFactory = new SilverStarFactory(world);
     }
 
     public List<Body> getBodys() {
@@ -32,11 +31,19 @@ public abstract class Level {
 
     public abstract Vector2 getCameraPosition();
     public abstract float getCameraZoom();
+    public abstract int getWorldWidth();
 
     public abstract int getNumberOfStars();
 
     public World getWorld() {
         return world;
+    }
+
+
+    protected void addEntity(Entity entity, float x, float y) {
+        entity.getBody().setTransform(x, y, entity.getRotation() * Constants.DEGREES_TO_RADIANS);
+        bodys.add(entity.getBody());
+        actors.add((Actor) entity.getBody().getUserData());
     }
 
     /* will set position to grid position x, y */
@@ -45,11 +52,8 @@ public abstract class Level {
         addEntityOnHalfGrid(entity, x * 2, y * 2);
     }
 
-    /* will set position to grid position x - .5, y - .5 */
     protected void addEntityOnHalfGrid(Entity entity, int x, int y) {
-        entity.getBody().setTransform((x / 2f) * GRID_SIZE, (y / 2f) * GRID_SIZE, entity.getRotation() * Constants.DEGREES_TO_RADIANS);
-        bodys.add(entity.getBody());
-        actors.add((Actor) entity.getBody().getUserData());
+        addEntity(entity, (x / 2f) * GRID_SIZE, (y / 2f) * GRID_SIZE);
     }
 
     protected void addWallsLine(int x1, int y1, int x2, int y2, int offsetX, int offsetY) {
@@ -80,11 +84,11 @@ public abstract class Level {
     protected static WallFactory wallFactory;
     protected static StarFactory starFactory;
     protected static MineFactory mineFactory;
-    protected static SilverStarFactory silverStarFactory;
 
-    private static final int GRID_SIZE = Constants.GRID_SIZE;
+    protected static final int GRID_SIZE = Constants.GRID_SIZE;
     private static final int HALF_GRID = GRID_SIZE / 2;
-    private static final int GRAVITY = -200;
+    protected static final int MARGIN = 4;
+    private static final int GRAVITY = -90;
 
     private List<Body> bodys = new ArrayList<Body>();
     private List<Actor> actors = new ArrayList<Actor>();

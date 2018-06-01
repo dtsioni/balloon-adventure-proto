@@ -23,11 +23,16 @@ public class Level1 extends Level {
         return CAMERA_ZOOM;
     }
 
+    public int getWorldWidth() {
+        return WORLD_WIDTH;
+    }
+
     public int getNumberOfStars() {
         return STARS;
     }
 
-    private final Vector2 CAMERA_POSITION = new Vector2(0, 20);
-    private final float CAMERA_ZOOM = 0.15f;
+    private final int WORLD_WIDTH = GRID_SIZE + MARGIN;
+    private final Vector2 CAMERA_POSITION = new Vector2(0, 0.5f * GRID_SIZE);
+    private final float CAMERA_ZOOM = 1f;
     private final int STARS = 1;
 }

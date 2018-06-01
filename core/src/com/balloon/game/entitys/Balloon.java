@@ -18,11 +18,13 @@ import java.util.Map;
 public class Balloon extends Entity {
     public Balloon(World world) {
         super();
+        texture = new Texture(IMG_PATH);
+        textureRegion = new TextureRegion(texture);
         setHeight(HEIGHT);
         setWidth(WIDTH);
         setScale(SCALE_X, SCALE_Y);
         setRotation(ROTATION);
-        setOrigin(WIDTH /2.0f, HEIGHT /2.0f);
+        setOrigin(WIDTH /2.0f, HEIGHT /2.0f - 1.5f);
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(getWidth()/2f);
@@ -37,6 +39,8 @@ public class Balloon extends Entity {
                 .withShape(circleShape)
                 .build();
 
+        body.setLinearDamping(LINEAR_DAMPING);
+
         circleShape.dispose();
         this.addListener(new PlayerInputListener(this));
         forces = new HashMap<Integer, Vector2>();
@@ -47,14 +51,23 @@ public class Balloon extends Entity {
         /* TODO why does going up reduce x speed? */
         /* TODO ^ density affects this */
 
-        if(touched)
-            body.applyForceToCenter(body.getLinearVelocity().x, body.getLinearVelocity().y + IMPULSE, true);
+        if(touched) {
+            if(body.getLinearVelocity().y < 0) {
+                body.setLinearVelocity(body.getLinearVelocity().x, body.getLinearVelocity().y + IMPULSE);
+            } else {
+                body.applyForceToCenter(0, FORCE_IMPULSE, true);
+            }
+        }
 
         if(getIsBlown())
             body.applyForceToCenter(getBlowForceX(), getBlowForceY(), true);
 
-        if(body.getLinearVelocity().x > MAX_X_SPEED)
-            body.setLinearVelocity(MAX_X_SPEED, body.getLinearVelocity().y);
+        /* limit balloon x and y speed */
+        if(body.getLinearVelocity().x > MAX_X_SPEED || body.getLinearVelocity().x < MAX_X_SPEED * -1)
+            body.setLinearVelocity(MAX_X_SPEED * Math.signum(body.getLinearVelocity().x), body.getLinearVelocity().y);
+
+        if(body.getLinearVelocity().y > MAX_Y_SPEED || body.getLinearVelocity().y < MAX_Y_SPEED * -1)
+            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_SPEED * Math.signum(body.getLinearVelocity().y));
 
     }
 
@@ -192,16 +205,19 @@ public class Balloon extends Entity {
     private float blowForceY;
     Map<Integer, Vector2> forces;
 
-    private final float MAX_X_SPEED = 90;
-    private final int SWAY = 5; /* higher is less sway */
+    private final float MAX_X_SPEED = 28;
+    private final float MAX_Y_SPEED = 25;
+    private final int SWAY = 2; /* higher is less sway */
+    private final float LINEAR_DAMPING = 0.05f;
 
-    private final float IMPULSE = 8000;
-    private final float DENSITY = 0.02f;
-    private final float RESTITUTION = 0.15f;
+    private final float IMPULSE = 4;
+    private final float FORCE_IMPULSE = 700;
+    private final float DENSITY = 0.3f;
+    private final float RESTITUTION = 0f;
     private final float FRICTION = 0.2f;
 
-    private final int WIDTH = 25;
-    private final int HEIGHT = 30;
+    private final int WIDTH = 4;
+    private final int HEIGHT = 5;
 
     private final int Y_OFFSET = 2;
 
@@ -213,6 +229,6 @@ public class Balloon extends Entity {
     private BodyDef bodyDef;
 
     private final String IMG_PATH = "img/balloon.png";
-    private final Texture texture = new Texture(IMG_PATH);
-    private final TextureRegion textureRegion = new TextureRegion(texture);
+    private final Texture texture;
+    private final TextureRegion textureRegion;
 }

@@ -33,5 +33,5 @@ public class WindFactory {
     }
 
     private World world;
-    private float force = 800f;
+    private float force = 100f;
 }

@@ -8,13 +8,21 @@ public class Level6 extends Level {
         addWallsLine(0, 0, 0, 6, -1, 0);
         addWallsLine(0, 6, 8, 6, 0, 1);
         addWallsLine(8, 2, 8, 6, 1, 0);
+        //addWallsLine(2, 1, 4, 1, 0, 0);
 
         addEntityOnGrid(windFactory.windRight(), 0, 1);
-        addEntityOnGrid(windFactory.windRight(), 1, 1);
         addEntityOnGrid(windFactory.windRight(), 3, 3);
         addEntityOnGrid(windFactory.windLeft(), 1, 3);
-        addEntityOnGrid(windFactory.windLeft(), 3, 1);
         addEntityOnGrid(windFactory.windLeft(), 4, 1);
+
+        addEntityOnHalfGrid(mineFactory.mine(), 2, 1);
+        addEntityOnHalfGrid(mineFactory.mine(), 3, 1);
+        addEntityOnHalfGrid(mineFactory.mine(), 4, 1);
+        addEntityOnHalfGrid(mineFactory.mine(), 5, 1);
+        addEntityOnHalfGrid(mineFactory.mine(), 6, 1);
+        addEntityOnHalfGrid(mineFactory.mine(), 7, 1);
+        addEntityOnHalfGrid(mineFactory.mine(), 8, 1);
+
 
         addEntityOnGrid(mineFactory.mine(), 0, 2);
         addEntityOnGrid(mineFactory.mine(), 1, 2);
@@ -28,9 +36,7 @@ public class Level6 extends Level {
         addEntityOnHalfGrid(wallFactory.wallVertical(), 1, 0);
 
         addEntityOnGrid(starFactory.star(), 0, 3);
-        addEntityOnGrid(silverStarFactory.star(), 4, 3);
-
-        addWallsLine(2, 1, 8, 1, 0, 0);
+        addEntityOnGrid(starFactory.silverStar(), 4, 3);
 
         addEntityOnGrid(balloonFactory.balloon(), 0, 0);
     }
@@ -47,7 +53,12 @@ public class Level6 extends Level {
         return STARS;
     }
 
-    private final Vector2 CAMERA_POSITION = new Vector2(100, 80);
-    private final float CAMERA_ZOOM = 0.3f;
+    public int getWorldWidth() {
+        return WORLD_WIDTH;
+    }
+
+    private final Vector2 CAMERA_POSITION = new Vector2(2f * GRID_SIZE, 1.5f * GRID_SIZE);
+    private final float CAMERA_ZOOM = 1f;
     private final int STARS = 1;
+    private final int WORLD_WIDTH = GRID_SIZE * 5 + MARGIN;
 }

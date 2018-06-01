@@ -1,11 +1,13 @@
 package com.balloon.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class InputProcessorImpl implements InputProcessor {
     public InputProcessorImpl(Stage stage) {
         this.stage = stage;
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override

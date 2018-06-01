@@ -58,6 +58,10 @@ public class LevelLoader {
         return level.getCameraZoom();
     }
 
+    public int getWorldWidth() {
+        return level.getWorldWidth();
+    }
+
     private int prevLevel;
     private Level level;
 }

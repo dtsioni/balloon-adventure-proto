@@ -22,6 +22,11 @@ public class SilverStar extends CollectableEntity {
     }
 
     @Override
+    protected float getShapeCollisionRatio() {
+        return 2f;
+    }
+
+    @Override
     protected int getThisWidth() {
         return Constants.GRID_SIZE / 3;
     }

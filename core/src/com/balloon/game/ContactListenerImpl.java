@@ -18,12 +18,10 @@ public class ContactListenerImpl implements ContactListener {
 
         if(userDataA instanceof Balloon || userDataB instanceof Balloon) {
             if (userDataB instanceof Wind) {
-                Gdx.app.debug("End contact", "Wind");
                 ((Balloon) userDataA).stopBlow(userDataB.hashCode());
             }
 
             if (userDataA instanceof Wind) {
-                Gdx.app.debug("End contact", "Wind");
                 ((Balloon) userDataB).stopBlow(userDataA.hashCode());
             }
         }
@@ -41,13 +39,11 @@ public class ContactListenerImpl implements ContactListener {
 
         if(userDataA instanceof Balloon || userDataB instanceof Balloon) {
             if (userDataB instanceof Wind) {
-                Gdx.app.debug("Begin contact", "Wind");
                 Wind objectB = (Wind) userDataB;
                 ((Balloon) userDataA).blow(objectB.getRotation(), objectB.getForce(), objectB.hashCode());
             }
 
             if (userDataA instanceof Wind) {
-                Gdx.app.debug("Begin contact", "Wind");
                 Wind objectA = (Wind) userDataA;
                 ((Balloon) userDataB).blow(objectA.getRotation(), objectA.getForce(), objectA.hashCode());
             }
