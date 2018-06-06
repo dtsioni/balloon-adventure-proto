@@ -71,7 +71,7 @@ public class Wall extends Entity {
 
     private final float DENSITY = 8f;
     private final float RESTITUTION = 0.05f;
-    private final float FRICTION = 0.08f;
+    private final float FRICTION = 0f;
 
     private final int HEIGHT = 2;
     private final int WIDTH = Constants.GRID_SIZE + HEIGHT;

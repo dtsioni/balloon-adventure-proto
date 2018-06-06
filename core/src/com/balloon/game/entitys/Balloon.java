@@ -53,6 +53,7 @@ public class Balloon extends Entity {
 
         if(touched) {
             if(body.getLinearVelocity().y < 0) {
+                //yForce = FORCE_IMPULSE + FORCE_IMPULSE * (body.getLinearVelocity().y / MAX_DOWN_SPEED);
                 body.setLinearVelocity(body.getLinearVelocity().x, body.getLinearVelocity().y + IMPULSE);
             } else {
                 body.applyForceToCenter(0, FORCE_IMPULSE, true);
@@ -66,8 +67,11 @@ public class Balloon extends Entity {
         if(body.getLinearVelocity().x > MAX_X_SPEED || body.getLinearVelocity().x < MAX_X_SPEED * -1)
             body.setLinearVelocity(MAX_X_SPEED * Math.signum(body.getLinearVelocity().x), body.getLinearVelocity().y);
 
-        if(body.getLinearVelocity().y > MAX_Y_SPEED || body.getLinearVelocity().y < MAX_Y_SPEED * -1)
-            body.setLinearVelocity(body.getLinearVelocity().x, MAX_Y_SPEED * Math.signum(body.getLinearVelocity().y));
+        if(body.getLinearVelocity().y > MAX_UP_SPEED)
+            body.setLinearVelocity(body.getLinearVelocity().x, MAX_UP_SPEED);
+
+        if(body.getLinearVelocity().y < MAX_DOWN_SPEED)
+            body.setLinearVelocity(body.getLinearVelocity().x, MAX_DOWN_SPEED);
 
     }
 
@@ -78,7 +82,8 @@ public class Balloon extends Entity {
 
     @Override
     public float getRotation() {
-        return body.getLinearVelocity().x * -1 / SWAY;
+        /* TODO make this equal to the acceleration of the body */
+        return (body.getLinearVelocity().x * -1) * SWAY;
     }
 
     public void blow(float rotation, float force, int windId) {
@@ -205,16 +210,17 @@ public class Balloon extends Entity {
     private float blowForceY;
     Map<Integer, Vector2> forces;
 
-    private final float MAX_X_SPEED = 28;
-    private final float MAX_Y_SPEED = 25;
-    private final int SWAY = 2; /* higher is less sway */
-    private final float LINEAR_DAMPING = 0.05f;
+    private final float MAX_X_SPEED = 20;
+    private final float MAX_UP_SPEED = 28;
+    private final float MAX_DOWN_SPEED = -20;
+    private final float SWAY = 0.5f; /* higher is more sway */
+    private final float LINEAR_DAMPING = 0f;
 
     private final float IMPULSE = 4;
     private final float FORCE_IMPULSE = 700;
     private final float DENSITY = 0.3f;
     private final float RESTITUTION = 0f;
-    private final float FRICTION = 0.2f;
+    private final float FRICTION = 0f;
 
     private final int WIDTH = 4;
     private final int HEIGHT = 5;

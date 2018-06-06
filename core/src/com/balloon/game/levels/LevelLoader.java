@@ -40,6 +40,9 @@ public class LevelLoader {
             case 7:
                 this.level = new Level7();
                 return;
+            case 8:
+                this.level = new Level8();
+                return;
             default:
                 withLevel(prevLevel - 1);
                 return;

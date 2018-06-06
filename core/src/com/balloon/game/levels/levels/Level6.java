@@ -14,6 +14,7 @@ public class Level6 extends Level {
         addEntityOnGrid(windFactory.windRight(), 3, 3);
         addEntityOnGrid(windFactory.windLeft(), 1, 3);
         addEntityOnGrid(windFactory.windLeft(), 4, 1);
+        addEntityOnGrid(windFactory.windLeft(), 3, 1);
 
         addEntityOnHalfGrid(mineFactory.mine(), 2, 1);
         addEntityOnHalfGrid(mineFactory.mine(), 3, 1);

@@ -91,7 +91,7 @@ public class Wind extends Entity {
 
     private float force;
 
-    private final int WIDTH = Constants.GRID_SIZE - 4;
+    private final int WIDTH = Constants.GRID_SIZE - 3;
     private final int HEIGHT = WIDTH;
 
     private final int SCALE_X = 1;

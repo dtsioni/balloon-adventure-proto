@@ -34,7 +34,7 @@ public class Level4 extends Level {
 
         addEntityOnGrid(starFactory.star(), 0, 2);
         /* TODO this is broken */
-        addEntity(starFactory.silverStar(), 22, 17);
+        addEntity(starFactory.silverStar(), GRID_SIZE * 2 + 2, GRID_SIZE * 2 - 3);
 
         addEntityOnGrid(balloonFactory.balloon(), 0, 0);
     }

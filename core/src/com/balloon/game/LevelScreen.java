@@ -50,7 +50,6 @@ public class LevelScreen implements Screen {
         stage = new Stage(fitViewport, batch);
         inputProcessor = new InputProcessorImpl(stage);
         orthographicCamera.position.set(levelLoader.getCameraPosition(), 0);
-        orthographicCamera.zoom = levelLoader.getCameraZoom();
         StarHandler.withStars(levelLoader.getLevelScore());
         Gdx.input.setInputProcessor(inputProcessor);
         debugRenderer.setDrawVelocities(true);
@@ -74,7 +73,7 @@ public class LevelScreen implements Screen {
         stage.act();
 
         batch.begin();
-        batch.draw(backgroundTexture, -20, -20);
+        batch.draw(backgroundTexture, -24, -34, fitViewport.getWorldHeight() * (1192 / 670) + 24, fitViewport.getWorldHeight() + 24);
         batch.end();
 
         stage.draw();
@@ -84,7 +83,6 @@ public class LevelScreen implements Screen {
         RemoveBodyHandler.removeBodysFromWorld();
 
         if(Gdx.app.getInput().isKeyPressed(Input.Keys.E)) {
-            if(level == 6) level = 0;
             hotAirGame.showLevel(level + 1);
             resetHandlers();
         }

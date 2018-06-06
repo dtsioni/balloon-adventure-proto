@@ -38,5 +38,5 @@ public class Star extends CollectableEntity {
         return IMG_PATH;
     }
 
-    private final String IMG_PATH = "img/star.png";
+    private final String IMG_PATH = "img/goldStar.png";
 }

@@ -13,7 +13,7 @@ public class HotAirGame extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 
-		showLevel(5);
+		showLevel(1);
 	}
 
 	public void showMainMenu() {
@@ -23,6 +23,7 @@ public class HotAirGame extends Game {
 	}
 
 	public void showLevel(int level) {
+		if(level == 8) level = 1;
 		if(getScreen() != null) getScreen().hide();
 		levelScreen = new LevelScreen(this, level);
 		this.setScreen(levelScreen);
