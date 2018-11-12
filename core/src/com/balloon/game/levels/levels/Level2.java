@@ -1,7 +1,6 @@
 package com.balloon.game.levels.levels;
 
 import com.badlogic.gdx.math.Vector2;
-import com.balloon.game.Constants;
 import com.balloon.game.levels.Level;
 
 public class Level2 extends Level {
@@ -16,7 +15,8 @@ public class Level2 extends Level {
         addEntityOnHalfGrid(wallFactory.wallHorizontal(), 0, 3);
         addEntityOnHalfGrid(wallFactory.wallHorizontal(), 2, 3);
         addEntityOnGrid(starFactory.star(), 1, 1);
-        addEntityOnGrid(balloonFactory.balloon(), 0, 0);
+
+        addEntityOnGrid(balloon, 0, 0);
     }
 
     public Vector2 getCameraPosition() {

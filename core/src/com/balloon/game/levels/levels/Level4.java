@@ -36,7 +36,7 @@ public class Level4 extends Level {
         /* TODO this is broken */
         addEntity(starFactory.silverStar(), GRID_SIZE * 2 + 2, GRID_SIZE * 2 - 3);
 
-        addEntityOnGrid(balloonFactory.balloon(), 0, 0);
+        addEntityOnGrid(balloon, 0, 0);
     }
 
     public Vector2 getCameraPosition() {
@@ -56,7 +56,7 @@ public class Level4 extends Level {
     }
 
     private final Vector2 CAMERA_POSITION = new Vector2(1.5f *GRID_SIZE, 1.5f * GRID_SIZE);
-    private final float CAMERA_ZOOM = 1f;
+    private final float CAMERA_ZOOM = 0.6f;
     private final int STARS = 1;
     private final int WORLD_WIDTH = GRID_SIZE * 4 + MARGIN;
 }

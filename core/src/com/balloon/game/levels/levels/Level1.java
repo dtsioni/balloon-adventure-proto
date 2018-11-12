@@ -12,7 +12,9 @@ public class Level1 extends Level {
         addEntityOnHalfGrid(wallFactory.wallVertical(), -1, 2);
         addEntityOnHalfGrid(wallFactory.wallVertical(), 1, 2);
         addEntityOnHalfGrid(wallFactory.wallHorizontal(), 0, 3);
-        addEntityOnGrid(balloonFactory.balloon(), 0, 0);
+
+
+        addEntityOnGrid(balloon, 0, 0);
     }
 
     public Vector2 getCameraPosition() {

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.balloon.game.BodyBuilder;
 import com.balloon.game.Constants;
@@ -40,6 +41,10 @@ public class Balloon extends Entity {
                 .build();
 
         body.setLinearDamping(LINEAR_DAMPING);
+
+        DistanceJointDef defJoint = new DistanceJointDef();
+        defJoint.length = 0;
+        defJoint.initialize
 
         circleShape.dispose();
         this.addListener(new PlayerInputListener(this));

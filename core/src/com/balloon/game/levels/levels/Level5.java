@@ -34,7 +34,7 @@ public class Level5 extends Level {
 
         addEntityOnGrid(starFactory.star(), 1, 4);
 
-        addEntityOnHalfGrid(balloonFactory.balloon(), 2, -1);
+        addEntityOnHalfGrid(balloon, 2, -1);
     }
 
     public Vector2 getCameraPosition() {

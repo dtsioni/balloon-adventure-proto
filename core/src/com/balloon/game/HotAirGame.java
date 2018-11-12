@@ -13,7 +13,7 @@ public class HotAirGame extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 
-		showLevel(1);
+		showLevel(7);
 	}
 
 	public void showMainMenu() {

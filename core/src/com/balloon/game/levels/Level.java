@@ -5,8 +5,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.balloon.game.Constants;
+import com.balloon.game.entitys.Balloon;
 import com.balloon.game.entitys.Entity;
-import com.balloon.game.factorys.*;
+import com.balloon.game.factorys.BalloonFactory;
+import com.balloon.game.factorys.MineFactory;
+import com.balloon.game.factorys.StarFactory;
+import com.balloon.game.factorys.WallFactory;
+import com.balloon.game.factorys.WindFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,8 @@ public abstract class Level {
         wallFactory = new WallFactory(world);
         starFactory = new StarFactory(world);
         mineFactory = new MineFactory(world);
+
+        balloon = balloonFactory.balloon();
     }
 
     public List<Body> getBodys() {
@@ -32,6 +39,10 @@ public abstract class Level {
     public abstract Vector2 getCameraPosition();
     public abstract float getCameraZoom();
     public abstract int getWorldWidth();
+
+    public Actor getBalloon() {
+        return balloon;
+    }
 
     public abstract int getNumberOfStars();
 
@@ -84,11 +95,12 @@ public abstract class Level {
     protected static WallFactory wallFactory;
     protected static StarFactory starFactory;
     protected static MineFactory mineFactory;
+    protected Balloon balloon;
 
     protected static final int GRID_SIZE = Constants.GRID_SIZE;
     private static final int HALF_GRID = GRID_SIZE / 2;
     protected static final int MARGIN = 4;
-    private static final int GRAVITY = -90;
+    private static final int GRAVITY = Constants.GRAVITY;
 
     private List<Body> bodys = new ArrayList<Body>();
     private List<Actor> actors = new ArrayList<Actor>();

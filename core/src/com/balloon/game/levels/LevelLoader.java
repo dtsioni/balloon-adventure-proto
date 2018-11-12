@@ -65,6 +65,10 @@ public class LevelLoader {
         return level.getWorldWidth();
     }
 
+    public Actor getBalloon() {
+        return level.getBalloon();
+    }
+
     private int prevLevel;
     private Level level;
 }

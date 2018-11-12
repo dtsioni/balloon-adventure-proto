@@ -40,16 +40,15 @@ public class LevelScreen implements Screen {
         removeBodyHandler = new RemoveBodyHandler();
         bitmapFont = new BitmapFont();
         starHandler = new StarHandler();
-        /* TODO fix this camera bullshit */
-        orthographicCamera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-        orthographicCamera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         levelLoader.withLevel(level);
+        orthographicCamera = new FollowingOrthographicCamera(levelLoader.getBalloon(), SCREEN_WIDTH, SCREEN_HEIGHT);
+        orthographicCamera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         fitViewport = new FitViewport(levelLoader.getWorldWidth(), levelLoader.getWorldWidth() / ASPECT_RATIO, orthographicCamera);
         stage = new Stage(fitViewport, batch);
         inputProcessor = new InputProcessorImpl(stage);
         orthographicCamera.position.set(levelLoader.getCameraPosition(), 0);
+        orthographicCamera.zoom = levelLoader.getCameraZoom();
         StarHandler.withStars(levelLoader.getLevelScore());
         Gdx.input.setInputProcessor(inputProcessor);
         debugRenderer.setDrawVelocities(true);
